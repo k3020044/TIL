@@ -17,7 +17,6 @@ for문으로 시작점 좌표 i, j를 찾고, 또 그 안에 for문을 사용해
 1. for문이 다 안돌아가는 코드
    
    ```python
-   
    t = int(input())
    for tc in range(1, t+1):
        n, k = map(int, input().split())
@@ -39,45 +38,36 @@ for문으로 시작점 좌표 i, j를 찾고, 또 그 안에 for문을 사용해
                    max_value = sum_value
    
        print(f'#{tc} {max_value}')
-   
    ```
-   
-   
-   
-   
 
-2.  함수 활용한 코드
+2. 함수 활용한 코드
    
    ```python
-   
    def values(i, j):
-       global max_value
-       sum_value = 0
-       for n in range(k):
-           for m in range(k):
-               sum_value += arr[i+n][j+m]
-       for x in range(1, k-1):
-           for y in range(1, k-1):
-               sum_value -= arr[i+x][j+y]
-       if sum_value > max_value:
-           max_value = sum_value
+      global max_value
+      sum_value = 0
+      for n in range(k):
+          for m in range(k):
+              sum_value += arr[i+n][j+m]
+      for x in range(1, k-1):
+          for y in range(1, k-1):
+              sum_value -= arr[i+x][j+y]
+      if sum_value > max_value:
+          max_value = sum_value
    
    t = int(input())
    for tc in range(1, t+1):
-       n, k = map(int, input().split())
-       arr = [list(map(int, input().split())) for _ in range(n)]
+      n, k = map(int, input().split())
+      arr = [list(map(int, input().split())) for _ in range(n)]
    
-       max_value = 0
-       for i in range(n-k+1):
-           for j in range(n-k+1):
-               #print(i, j)
-               values(i, j)
+      max_value = 0
+      for i in range(n-k+1):
+          for j in range(n-k+1):
+              #print(i, j)
+              values(i, j)
    
-       print(f'#{tc} {max_value}')
+      print(f'#{tc} {max_value}')
    ```
-   
-   
-   
 
 ---
 
@@ -85,4 +75,8 @@ for문으로 시작점 좌표 i, j를 찾고, 또 그 안에 for문을 사용해
 
 아무리 봐도 내가 예전에 파리퇴치 문제 푼 코드를 봐도 틀린게 없는데 왜 안됐을까? 이럴 때 정말 답답함을 느낀다. 똑같은 logic으로 방식만 바꿔서 구현했을 때는 잘돌아가는데 말이다. 어쨌든 열심히 풀었고, 결국은 풀었다. 
 
+한참을 보다가 문제점을 찾았다. 결국 내가 잘못한거였다. 사소한 실수를 줄여야겠다
 
+1. 변수 중복 문제 : for n in range(k) 이 부분에서 n은 input에서 쓰였기 때문에 또 써서 for문이 제대로 안돌아갔다
+
+2. 최대값 비교하는 위치 depth : max_value 갱신하는 부분을 sum_value 하위에 적어야 하는데 상위로 빼서 제대로 안돌아갔다
