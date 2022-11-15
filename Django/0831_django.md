@@ -18,10 +18,13 @@
 - **Model** : 데이터를 구조화하고 조작하기 위한 것
   
   - database : 구조화 작업을 보다 쉽게 하기 위해 데이터를 체계화하여 저장한 것
-    - schema 스키마 : structure, 자료의 구조, 표현 방법, 관계 등을 정의
-    - table : field(열,column)와 record(행)를 사용해 조직된 데이터 요소들의 집합
-    - pk(primary key) : 각 record의 고유한 값, 기술적으로 다른 항목과 중복될 수 없는 unique한 값 ex. 주민번호
-    - query : 데이터를 추출하거나 조작하는 명령어
+    1. schema 스키마 : structure, 자료의 구조, 표현 방법, 관계 등을 정의
+    
+    2. table : field(열,column)와 record(행)를 사용해 조직된 데이터 요소들의 집합
+    
+    3. pk(primary key) : 각 record의 고유한 값, 기술적으로 다른 항목과 중복될 수 없는 unique한 값 ex. 주민번호
+    
+    4. query : 데이터를 추출하거나 조작하는 명령어
   
   model class 1개 == database table 1개. 데이터베이스의 layout
   
@@ -99,30 +102,32 @@
     ```
   
   - read
-
-```python
-all() # 전체 데이터 조회
-get() # pk 같은 단일 데이터 조회. 객체 없으면 doesnotexist 에러, 둘 이상이면 multipleobjectsreturned 에러
-Article.objects.get(pk=1) >> <Article: Article object (1)>
-filter() # 특정 조건의 데이터 조회, 없으면 빈 queryset 반환, 1개여도 단일 객체 아니라 하나의 queryset 반환
-Article.objects.filter(content='django!')
-Article.objects.filter(content__contains='dj') # content에 'dj' 포함된거 출력 
-```
-
-- update 수정
+    
+    ```python
+    all() # 전체 데이터 조회
+    get() # pk 같은 단일 데이터 조회. 객체 없으면 doesnotexist 에러, 둘 이상이면 multipleobjectsreturned 에러
+    Article.objects.get(pk=1) >> <Article: Article object (1)>
+    filter() # 특정 조건의 데이터 조회, 없으면 빈 queryset 반환, 1개여도 단일 객체 아니라 하나의 queryset 반환
+    Article.objects.filter(content='django!')
+    Article.objects.filter(content__contains='dj') # content에 'dj' 포함된거 출력 
+    ```
   
-  ```python
-  article = Article.objects.get(pk=1) # 바꿀 객체 호출
-  article.title = 'byebye' # 데이터 입력
-  article.save() # 저장
-  ```
-
-- delete
+  - update
+    
+    ```python
+    article = Article.objects.get(pk=1) # 바꿀 객체 호출
+    article.title = 'byebye' # 데이터 입력
+    article.save() # 저장
+    ```
   
-  ```python
-  article = Article.objects.get(pk=1) # 바꿀 객체 호출
-  article.delete() # 삭제
-  # 삭제 후 데이터 다시 입력하면 1번이 아니라 그 다음 pk에 저장됨
-  ```
+  - delete
+    
+    ```python
+    article = Article.objects.get(pk=1) # 바꿀 객체 호출
+    article.delete() # 삭제
+    # 삭제 후 데이터 다시 입력하면 1번이 아니라 그 다음 pk에 저장됨
+    ```
+
+
 
 
