@@ -1,4 +1,6 @@
-#### scratch
+## scratch
+
+---
 
 what is computer science : problem solving. input(something that i want to solve) and output.
 
