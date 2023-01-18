@@ -123,6 +123,8 @@ function App() {
 
 state에 변수 저장하면 state 변경되어도 HTML이 자동으로 재렌더링되어서 app처럼 보여짐 >> 자주 바뀌는 데이터 state에 넣기
 
+동일한 component여도 state는 개별적으로 관리됨
+
 ```jsx
 // state로 데이터 바인딩하기
 import React, { useState } from 'react';
@@ -167,9 +169,15 @@ function 제목바꾸기(){
 
 ### Component
 
+어떠한 속성(props)들을 입력으로 받아서 그에 맞는 리액트 element를 생성해 return함
+
+ex. 붕어빵 기계에서 붕어빵 틀(component), 재료(props), 완성된 붕어빵(element)
+
 return 안에 html 태그 넣을때 코드의 가독성을 위해서 component로 따로 만들고, 이를 return 안에 작성하면 됨, return안에 있는 태그는 하나로 묶여야함(<>, </>)
 
 component로 만들면 좋은 것 : 반복 출현하는 html 덩어리들, 자주 변경되는 html UI들(재렌더링이 많이 요구되는 것들)
+
+component 이름은 항상 대문자로 시작해야함(소문자인 경우 html 태그로 인식함)
 
 ```jsx
 return
@@ -187,6 +195,16 @@ function Modal(){
     </div>
   )
 }
+
+// 1. 함수 component
+function Welcome(props) {
+    return <h1>안녕, {props.name}</h1>
+}
+
+// 2. 클래스 component
+class Welcome extends React.Component {
+    render() {
+        return <h1>안녕, {this.props.name}</h1>
+    }
+}
 ```
-
-
