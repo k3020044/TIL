@@ -19,6 +19,8 @@ npm start // index.js를 실행하게됨
 
 // 기타
 /* eslint-disable */ : 터미널창에 노란색 waring message 안뜸
+
+rfc + tab : 기본 component 코드 자동 완성
 ```
 
 ### 초기 구조
