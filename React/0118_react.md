@@ -19,8 +19,6 @@
     클래스 컴포넌트에서 제공하는 생명주기 함수(componentDidMount, componentDidUpdate, componentWillUnmount)와 동일한 기능을 하나로 통합해서 제공함
    
     useEffect(effect 함수, 의존성 배열), 의존성 배열 안에 있는 변수 중 하나라도 값이 변경될때 effect 함수가 실행됨
-   
-   
 
 3. **useMemo** : memoized value를 리턴하는 훅, 연산량이 높은 작업을 반복하는 것을 방지하기 위해 사용
    
@@ -50,3 +48,48 @@
     렌더링될 때마다 항상 같은 ref 객체를 반환하고, 컴포넌트가 마운트 해제되기 전까지는 계속 유지됨
 
 ---
+
+### Material UI
+
+리액트 UI 라이브러리 중 하나
+
+```jsx
+// 설치 명령어
+npm install @material-ui/core @material-ui/icons (--save --legacy-peer-deps)
+
+// HomeScreen.js
+import React from 'react';
+import { Box, Card, CardActionArea, Typography } from '@material-ui/core';
+import TouchAppIcon from '@material-ui/icons/TouchApp';
+import { useStyles } from '../styles';
+import Logo from '../components/Logo';
+export default function HomeScreen(props) {
+  const styles = useStyles();
+  return (
+    <Card>
+      <CardActionArea onClick={() => props.history.push('/choose')}>
+        <Box className={[styles.root, styles.red]}>
+          <Box className={[styles.main, styles.center]}>
+            <Typography variant="h6" component="h6">
+              Fast & Easy
+            </Typography>
+            <Typography variant="h1" component="h1" className={styles.bold}>
+              Order <br />
+              & pay
+              <br />
+              here
+            </Typography>
+            <TouchAppIcon fontSize="large"></TouchAppIcon>
+          </Box>
+          <Box className={[styles.center, styles.green]}>
+            <Logo large />
+            <Typography variant="h5" component="h5" className={styles.footer}>
+              Touch to start
+            </Typography>
+          </Box>
+        </Box>
+      </CardActionArea>
+    </Card>
+  );
+}
+```
