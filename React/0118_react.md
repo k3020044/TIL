@@ -93,3 +93,151 @@ export default function HomeScreen(props) {
   );
 }
 ```
+
+---
+
+### 조건부 렌더링(conditional rendering)
+
+```jsx
+// 로그인/로그아웃 여부에 따라 다른 메세지 보이도록
+
+// 1. 메세지 function 정의
+function UserGreeting(props) {
+    return <h1>다시 오셨군요</h1>
+}
+
+function GuestGreeting(props) {
+    return <h1>회원가입을 해주세요</h1>
+}
+
+// 2. 조건에 따라 렌더링되로록 function 정의
+function Greeting(props) {
+    const isloggedIn = props.isLoggedIn
+    if (isLiggedIn) {
+            return <UserGreeting />
+    }
+        return <GuestGreeting />
+    }
+
+// 로그인/로그아웃 여부에 따라 다른 버튼이 보이도록
+
+// 1. button component 생성
+function LoginButton(props) {
+    return (
+        <button onClick={props.onClick}> 로그인 </button>
+    )
+}
+
+function LogoutButton(props) {
+    return (
+        <button onClick={props.onClick}> 로그아웃 </button>
+    )
+}
+
+// 2. 로그인 여부 정보 담을 state 및 정보 변경하는 함수 생성
+function LoginControl(props) {
+    const [ isLoggedIn, setIsLoggedIn ] = useState(false) // 기본 default 값은 false    
+
+    const handleLoginClick = () => { // isLoggedIn 값을 true로 바꿔줌
+        setIsLoggedIn(true)
+    }
+
+    const handleLogoutClick = () => { // isLoggedIn 값을 false로 바꿔줌
+        setIsLoggedIn(false)
+    }
+} 
+
+    let button // 변수 생성
+    if (isLoggedIn) { // isLoggedIn 값이 true이면 button 변수에 LogoutButton 컴포넌트 넣어줌
+        button = <LogoutButton onClick={handleLogoutClick} /> // 엘리먼트 변수: 변수에 컴포넌트를 대입
+    }  else {
+    button = <LoginButton onClick={handleLoginClick} />
+    }
+
+    return (
+        <div>
+            <Greeting isLoggedIn={isLoggedIn} />
+            {button} // 엘리먼트 변수에 담은 컴포넌트가 출력됨
+        <div/>
+    )
+}
+```
+
+- truthy : true, {}, [](empty object,array), “0”, “false”
+- falsy : false, 0, -0, 0n, ‘’, “”(empty string), null, undefined, NaN
+
+---
+
+### Modal 구현
+
+```jsx
+// components/Modal.js
+import React from "react";
+import '../App.css'; 
+
+function Modal(props) {
+
+function closeModal() {
+    props.closeModal();
+    }
+
+    return (
+      <div className="Modal" onClick={closeModal}>
+        <div className="modalBody" onClick={(e) => e.stopPropagation()}>
+          <button id="modalCloseBtn" onClick={closeModal}>
+            ❌
+          </button>
+          {props.children}
+        </div>
+      </div>
+    );
+  }     
+export default Modal;
+
+// App.js
+function App() {
+  // 매장식사, 포장 여부 모달
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+
+    return (
+  <div>
+    <Header/>
+    <EasyImage/>
+    <div>
+          {/* 매장식사, 포장 여부 모달 */}
+      <input type="button" value="결제" onClick={() => setModalIsOpen(!modalIsOpen)}/>
+      {modalIsOpen && (
+        <Modal closeModal={() => setModalIsOpen(!modalIsOpen)}>
+          <div id="rectangle">
+            <div className="box green"> 먹고 가기 </div> 
+            <div className="box green"> 가져 가기 </div>
+          </div>
+        </Modal>
+      )}
+
+// index.css
+.modalBody {
+  position: absolute;
+  width: 100%;
+  height: 60%;
+  padding: 40px;
+  text-align: center;
+  background-color: rgb(255, 255, 255);
+  border-radius: 10px;
+  box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
+}
+
+#modalCloseBtn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  border: none;
+  color: rgba(0, 0, 0, 0.7);
+  background-color: transparent;
+  font-size: 20px;
+}
+
+#modalCloseBtn:hover {
+  cursor: pointer;
+}
+```
