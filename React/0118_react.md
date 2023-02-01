@@ -1,4 +1,4 @@
-# 1/18 리액트 정리(hooks)
+# 1/18 리액트 정리
 
 ### Hooks
 
@@ -240,4 +240,69 @@ function App() {
 #modalCloseBtn:hover {
   cursor: pointer;
 }
+```
+
+### Modal 중첩 구현
+
+```jsx
+// 모달>모달>모달로 렌더링되도록 구현
+// keypoint: onClick에 여러개의 event 연결이 가능하기 때문에 
+// 눌렀을 때 기존 모달의 state는 false로 바꾸고, 새로 열려는 모달의 state는 true로 바꾸면됨
+
+function App() {
+  // 매장식사, 포장 여부 모달
+  const [takeoutModal, setTakeoutModal] = useState(false);
+
+  // 커스텀 모달
+  const [customModal, setCustomModal] = useState(false);
+
+  // 결제 완료 모달
+  const [payModal, setPayModal] = useState(false);
+
+return (
+  <div>
+    {/* 매장식사, 포장 여부 모달 */}
+      <input type="button" value="결제" onClick={() => setTakeoutModal(!takeoutModal)}/>
+      {takeoutModal && (
+        <Modal closeModal={() => setTakeoutModal(!takeoutModal)}>
+          <div id="rectangle">
+            <div className="box green" onClick={() => { 
+              setTakeoutModal(!takeoutModal) 
+              setCustomModal(!customModal)}} > 먹고 가기 </div> 
+            <div className="box green" onClick={() => { 
+              setTakeoutModal(!takeoutModal)
+              setCustomModal(!customModal)}} > 가져 가기 </div>
+          </div>
+        </Modal>
+      )}
+
+    {/* 커스텀 모달  */}
+    {customModal && (
+        <Modal closeModal={() => setCustomModal(!customModal)}>
+          {/* <div class="toggle-button-cover"> */}
+          {/* 단품/세트 선택 토글 */}
+            <div class="button-cover">
+              <div class="button r" id="button-1">
+                <input type="checkbox" class="checkbox" />
+                <div class="knobs"></div>
+                <div class="layer"></div>
+              </div>
+            </div>
+            <button onClick={() => {
+              setCustomModal(!customModal) 
+              setPayModal(!payModal)}}>커스텀 완료</button>
+          {/* </div> */}
+        </Modal>
+       )}
+
+    {/* 결제 완료 모달 */}
+    {payModal && (
+        <Modal closeModal={() => setPayModal(!payModal)}>
+          <div id="rectangle">
+            <div className="box green" onClick={() => setPayModal(!payModal)}>현금</div>
+            <div className="box green">카카오페이</div>
+          </div>
+        </Modal>
+        )}
+  </div>
 ```
