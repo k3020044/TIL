@@ -93,6 +93,68 @@ export default function HelloFunction(**props**) {
         }}>나이/이름 변경</button>
 ```
 
+### 부모&자식 컴포넌트간 데이터 전달
+
+- 부모에서 자식으로
+  
+  ```jsx
+  // App.js
+  import React, { useState } from "react";
+  import Child from "./components/Child";
+  
+  function App() {
+    const [data, setData] = useState(1);
+  
+    return <Child data={data}></Child>; // data라는 변수에 1을 담아서 전달
+  }
+  
+  export default App;
+  
+  // Child.js
+  import React from "react";
+  
+  function Child({ data }) {
+    console.log(data);
+    return <div>Child</div>;
+  }
+  
+  export default Child;
+  ```
+
+- 자식에서 부모로
+  
+  ```jsx
+  // 부모 컴포넌트에서 함수를 정의하고 이 함수를 props로 자식에게 내려준 후, 자식 컴포넌트의 데이터를 함수의 인자로 부모에게 전달
+  // App.js
+  import React, { useState } from "react";
+  import Child from "./components/Child";
+  
+  function App() {
+    const parentFunction = (x) => {
+      console.log(x);
+    };
+  
+    return <Child parentFunction={parentFunction}></Child>;
+  }
+  
+  export default App;
+  
+  // Child.js
+  import React, { useState } from "react";
+  
+  function Child({ parentFunction }) {
+    const [data, setData] = useState(2);
+  
+    parentFunction(data);
+  
+    return <div>Child</div>;
+  }
+  
+  export default Child;
+  ```
+
+---
+
 ### dummy 데이터 활용
 
 json으로 받아온 dummy 데이터를 map method 사용해서 화면에 출력되도록 함
